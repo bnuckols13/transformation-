@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Crisis & Reconstruction of Analytical Psychology</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Pro:wght@400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #f8f8f8;
+            --accent: #ff6b35;
+            --text: #2a2a2a;
+            --text-light: #666;
+            --border: #e0e0e0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --surface: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background: var(--secondary);
+            font-size: 16px;
+        }
+        
+        .header {
+            background: var(--surface);
+            padding: 3rem 2rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            font-weight: 400;
+            margin-bottom: 2rem;
+        }
+        
+        .header .meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--accent);
+            z-index: 101;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-container {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 200px;
+            z-index: 99;
+        }
+        
+        .navigation {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            overflow-x: auto;
+            padding: 0 2rem;
+        }
+        
+        .nav-item {
+            white-space: nowrap;
+            padding: 1rem 1.5rem;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+            color: var(--text-light);
+            position: relative;
+        }
+        
+        .nav-item:hover, .nav-item.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .section {
+            display: none;
+            padding: 4rem 0;
+            min-height: 60vh;
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        
+        .section-title {
+            font-family: 'Crimson Pro', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .content-grid {
+            display: grid;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .card {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .card p {
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+        
+        .highlight {
+            background: #fff7ed;
+            border-left: 4px solid var(--accent);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .highlight.success {
+            background: #f0fdf4;
+            border-left-color: var(--success);
+        }
+        
+        .highlight.warning {
+            background: #fffbeb;
+            border-left-color: var(--warning);
+        }
+        
+        .highlight.danger {
+            background: #fef2f2;
+            border-left-color: var(--danger);
+        }
+        
+        .quote {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            text-align: center;
+            padding: 2rem;
+            margin: 3rem auto;
+            max-width: 800px;
+            position: relative;
+            color: var(--text);
+        }
+        
+        .quote::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--accent);
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+        
+        /* Diagram Styles - Clean and Modern */
+        .diagram {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+        
+        .diagram-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Search Strategy Styles */
+        .search-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .search-step {
+            background: var(--surface);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            min-width: 300px;
+        }
+
+        .search-step:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0,0,0,0.12);
+        }
+
+        .question-step {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+        }
+
+        .databases-step {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            min-width: 600px;
+        }
+
+        .terms-step {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            border: none;
+            min-width: 700px;
+        }
+
+        .analysis-step {
+            background: linear-gradient(135deg, #43e97b, #38f9d7);
+            color: white;
+            border: none;
+            min-width: 600px;
+        }
+
+        .search-arrow {
+            font-size: 2rem;
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .search-step h4 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .question-step h4,
+        .databases-step h4,
+        .terms-step h4,
+        .analysis-step h4 {
+            color: white;
+        }
+
+        .databases-grid {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .database-item {
+            text-align: center;
+            padding: 0.8rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.3);
+            min-width: 100px;
+        }
+
+        .database-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: white;
+        }
+
+        .database-type {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.8);
+            margin-top: 0.3rem;
+        }
+
+        .search-categories {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .search-category {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .search-category h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.8rem;
+        }
+
+        .search-category ul {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: white;
+            margin: 0;
+            padding-left: 1.2rem;
+        }
+
+        .search-category li {
+            margin-bottom: 0.3rem;
+        }
+
+        .roesler-models-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .roesler-model {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .roesler-model h6 {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .roesler-model p {
+            font-size: 0.8rem;
+            color: white;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .analysis-categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .analysis-category {
+            background: rgba(255,255,255,0.2);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .analysis-category h5 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.8rem;
+        }
+
+        .analysis-category ul {
+            font-size: 0.8rem;
+            line-height: 1.4;
+            color: white;
+            margin: 0;
+            padding-left: 1rem;
+        }
+
+        .findings-section {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 2px solid var(--success);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .findings-section h4 {
+            color: var(--success);
+            text-align: center;
+            font-family: 'Crimson Pro', serif;
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .findings-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .finding-card {
+            background: var(--surface);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--success);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .finding-card h5 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .finding-card p {
+            font-size: 0.85rem;
+            color: var(--text);
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        /* All other existing styles from the original document... */
+        .collapse-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .theory-box {
+            background: var(--primary);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 200px;
+            position: relative;
+        }
+        
+        .theory-box h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .theory-box p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .arrow-right {
+            font-size: 2rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+        
+        .fragments {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            max-width: 400px;
+        }
+        
+        .fragment {
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: white;
+            transition: transform 0.2s ease;
+        }
+        
+        .fragment:hover {
+            transform: scale(1.05);
+            cursor: pointer;
+        }
+        
+        .fragment.biological { background: var(--danger); }
+        .fragment.anthropological { background: var(--warning); }
+        .fragment.transcendental { background: #8b5cf6; }
+        .fragment.psychological { background: var(--success); }
+        
+        .paradox-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .paradox-side {
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .collapse-side {
+            background: #fef2f2;
+            border: 2px solid var(--danger);
+        }
+        
+        .success-side {
+            background: #f0fdf4;
+            border: 2px solid var(--success);
+        }
+        
+        .paradox-side h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .collapse-side h4 { color: var(--danger); }
+        .success-side h4 { color: var(--success); }
+        
+        .evidence-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 2rem 0;
+        }
+        
+        .evidence-tier {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: transform 0.2s ease;
+        }
+        
+        .evidence-tier:hover {
+            transform: translateX(5px);
+        }
+        
+        .tier-label {
+            min-width: 180px;
+            font-weight: 600;
+        }
+        
+        .tier-very-strong { background: var(--success); color: white; }
+        .tier-strong { background: #059669; color: white; }
+        .tier-moderate { background: var(--warning); color: white; }
+        .tier-weak { background: #ea580c; color: white; }
+        .tier-insufficient { background: var(--danger); color: white; }
+        
+        .pathway {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+        
+        .pathway-step {
+            flex: 1;
+            min-width: 150px;
+            padding: 1.5rem 1rem;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .pathway-step:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        
+        .mechanisms-compare {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .mechanism-column {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 2px solid var(--border);
+        }
+        
+        .mechanism-column h4 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .established { border-color: var(--success); }
+        .proposed { border-color: var(--warning); }
+        
+        .established h4 { color: var(--success); }
+        .proposed h4 { color: var(--warning); }
+        
+        .mechanism-list {
+            list-style: none;
+        }
+        
+        .mechanism-list li {
+            padding: 0.75rem 1rem;
+            margin: 0.5rem 0;
+            background: var(--secondary);
+            border-radius: 6px;
+            border-left: 3px solid;
+            transition: transform 0.2s ease;
+        }
+        
+        .mechanism-list li:hover {
+            transform: translateX(5px);
+        }
+        
+        .established .mechanism-list li { border-left-color: var(--success); }
+        .proposed .mechanism-list li { border-left-color: var(--warning); }
+        
+        .caption {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            text-align: center;
+            font-style: italic;
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--secondary);
+            border-radius: 6px;
+        }
+        
+        .action-section {
+            background: var(--primary);
+            color: white;
+            padding: 4rem 2rem;
+            margin: 4rem -2rem 0;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .action-section h3 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .priority-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .priority-card {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .priority-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .collapse-flow {
+                flex-direction: column;
+            }
+            
+            .paradox-split, .mechanisms-compare {
+                grid-template-columns: 1fr;
+            }
+            
+            .pathway {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                padding: 0 1rem;
+            }
+            
+            .nav-item {
+                padding: 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+
+            .search-categories, .roesler-models-grid, .analysis-categories, .findings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .databases-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .search-step {
+                min-width: 250px;
+                padding: 1.5rem;
+            }
+
+            .terms-step, .databases-step, .analysis-step {
+                min-width: 280px;
+            }
+        }
+        
+        .interactive-tooltip {
+            position: relative;
+            cursor: pointer;
+            border-bottom: 1px dotted var(--accent);
+        }
+        
+        .tooltip-content {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            z-index: 1000;
+        }
+        
+        .interactive-tooltip:hover .tooltip-content {
+            opacity: 1;
+        }
+
+        /* Additional convergence styles that were missing */
+        .convergence-grid {
+            display: grid;
+            grid-template-columns: 1fr 180px 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .convergence-column {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 2px solid;
+        }
+
+        .psychodynamic-column {
+            border-color: #3498db;
+            background: linear-gradient(135deg, #f8fcff, #ebf3fd);
+        }
+
+        .jungian-column {
+            border-color: #9b59b6;
+            background: linear-gradient(135deg, #fdf8ff, #f3e8ff);
+        }
+
+        .shared-center {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 0.8rem;
+            background: linear-gradient(180deg, #f8fcff, #fdf8ff);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .shared-foundation {
+            background: linear-gradient(90deg, #3498db, #9b59b6);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            line-height: 1.2;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .bridge-item {
+            background: rgba(255,255,255,0.8);
+            margin: 0.5rem 0;
+            padding: 0.8rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            border-left: 3px solid;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .bridge-item:hover {
+            transform: translateX(3px);
+        }
+
+        .psychodynamic-column .bridge-item {
+            border-left-color: #3498db;
+        }
+
+        .jungian-column .bridge-item {
+            border-left-color: #9b59b6;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    
+    <header class="header">
+        <div class="header-content">
+            <h1>The Crisis & Reconstruction of Analytical Psychology</h1>
+            <p class="subtitle">A Research Program for Evidence-Based Depth Psychology</p>
+            <div class="meta">
+                <span>📊 Empirical Investigation</span>
+                <span>🔬 Mechanisms Research</span>
+                <span>🏥 Clinical Evidence</span>
+            </div>
+        </div>
+    </header>
+    
+    <div class="nav-container">
+        <nav class="navigation">
+            <div class="nav-item active" data-section="overview">Introduction</div>
+            <div class="nav-item" data-section="crisis">Theoretical Crisis</div>
+            <div class="nav-item" data-section="paradox">The Paradox</div>
+            <div class="nav-item" data-section="evidence">Contemporary Context</div>
+            <div class="nav-item" data-section="methodology">Literature Review</div>
+            <div class="nav-item" data-section="mechanisms">Mechanisms Analysis</div>
+            <div class="nav-item" data-section="reconstruction">Empirical Investigation</div>
+            <div class="nav-item" data-section="future">Call to Action</div>
+        </nav>
+    </div>
+    
+    <div class="container">
+        <!-- Overview Section -->
+        <section class="section active" id="overview">
+            <div class="section-header">
+                <h2 class="section-title">Introduction</h2>
+                <p class="section-subtitle">How a decade of systematic research revealed both the collapse of Jung's theory and an unprecedented opportunity for reconstruction</p>
+            </div>
+            
+            <div class="diagram">
+                <div class="diagram-title">Theoretical Convergence - Shared Foundations vs. Distinctive Elements</div>
+                <div class="convergence-grid">
+                    <div class="convergence-column psychodynamic-column">
+                        <h5>PSYCHODYNAMIC APPROACH</h5>
+                        <div style="font-size: 0.8rem; color: var(--text-light); margin-bottom: 0.5rem;">Established Mechanisms:</div>
+                        <div class="bridge-item">Mentalization & Reflective Function</div>
+                        <div class="bridge-item">Therapeutic Alliance Quality</div>
+                        <div class="bridge-item">Corrective Emotional Experience</div>
+                        <div class="bridge-item">Insight & Pattern Recognition</div>
+                        <div class="bridge-item">Affect Processing & Integration</div>
+                        <div class="bridge-item">Defensive Restructuring</div>
+                        <div class="bridge-item">Interpersonal Learning</div>
+                    </div>
+                    
+                    <div class="shared-center">
+                        <div style="text-align: center; color: var(--primary); font-size: 0.8rem; margin-bottom: 0.5rem;">SHARED FOUNDATIONS</div>
+                        <div class="shared-foundation">UNCONSCIOUS PROCESSES SHAPE LIFE</div>
+                        <div class="shared-foundation">TRANSFORMATION THROUGH RELATIONSHIP</div>
+                        <div class="shared-foundation">INSIGHT INTO INTERNAL CONFLICT</div>
+                        <div class="shared-foundation">SYMBOLIC & COGNITIVE INTEGRATION</div>
+                        <div class="shared-foundation">THERAPEUTIC CONTAINER HOLDS COMPLEXITY</div>
+                    </div>
+                    
+                    <div class="convergence-column jungian-column">
+                        <h5>ANALYTICAL PSYCHOLOGY</h5>
+                        <div style="font-size: 0.8rem; color: var(--text-light); margin-bottom: 0.5rem;">Distinctive Hypotheses:</div>
+                        <div class="bridge-item">Archetypal Activation Patterns</div>
+                        <div class="bridge-item">Autonomous Symbolic Processes</div>
+                        <div class="bridge-item">Individuation Self-Organization</div>
+                        <div class="bridge-item">Compensatory Dynamics</div>
+                        <div class="bridge-item">Transcendent Function Operation</div>
+                        <div class="bridge-item">Active Imagination Capacity</div>
+                        <div class="bridge-item">Numinous Experience Integration</div>
+                    </div>
+                </div>
+                <div class="caption">While sharing fundamental depth psychological assumptions, analytical psychology proposes distinctive mechanisms of symbolic autonomy that require empirical validation beyond established psychodynamic processes.</div>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <h3>The Roesler Investigation</h3>
+                    <p>Christian Roesler spent ten years conducting the most comprehensive scientific evaluation analytical psychology has ever undergone. His findings were startling.</p>
+                    <div class="highlight danger">
+                        <strong>Key Finding:</strong> Jung's archetypal theory makes claims across biology, anthropology, and religious studies that lack empirical support, requiring theoretical abandonment rather than defensive revision.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>What Survives</h3>
+                    <p>Despite the theoretical collapse, something remarkable emerged from Roesler's analysis: clinical evidence showing Jungian psychotherapy produces measurable therapeutic outcomes.</p>
+                    <div class="highlight success">
+                        <strong>Clinical Reality:</strong> The therapy works—we just don't understand the mechanisms through which change occurs.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quote">
+                The clinical work succeeds even as its theoretical foundation collapses, leaving analytical psychology as a demonstrably effective therapeutic approach that can no longer claim to understand the mechanisms underlying its own success.
+            </div>
+            
+            <div class="highlight">
+                <h4>Central Research Question</h4>
+                <p>How can Jung's transformation processes be empirically investigated as therapeutic mechanisms while preserving their essential depth psychological insights, potentially revealing autonomous psychological self-regulation processes that complement established relational and cognitive change mechanisms?</p>
+            </div>
+        </section>
+        
+        <!-- Crisis Section -->
+        <section class="section" id="crisis">
+            <div class="section-header">
+                <h2 class="section-title">Theoretical Crisis</h2>
+                <p class="section-subtitle">How Jung's "unified" theory fragmented under systematic examination</p>
+            </div>
+            
+            <div class="diagram">
+                <div class="diagram-title">The Collapse of Jung's Unified Archetypal Theory</div>
+                <div class="collapse-flow">
+                    <div class="theory-box">
+                        <h4>Jung's Archetypal Theory</h4>
+                        <p>(Claimed Unity)</p>
+                    </div>
+                    
+                    <div class="arrow-right">→</div>
+                    
+                    <div class="fragments">
+                        <div class="fragment biological" data-info="Universal behavioral patterns - lacks empirical support">Biological Claims</div>
+                        <div class="fragment anthropological" data-info="Cross-cultural universals - contradicted by research">Anthropological Claims</div>
+                        <div class="fragment transcendental" data-info="Spiritual realities - cannot be empirically validated">Transcendental Claims</div>
+                        <div class="fragment psychological" data-info="Transformation processes - retains scientific viability">Psychological Processes</div>
+                    </div>
+                </div>
+                <div class="caption">Roesler's analysis reveals four distinct approaches that lack coherence, with only psychological transformation processes retaining scientific viability.</div>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <h3>The Four Fragments</h3>
+                    <p>What appeared to be a unified theory was actually four distinct approaches making incompatible truth claims:</p>
+                    <ul style="margin-top: 1rem; line-height: 1.8;">
+                        <li><strong>Biological:</strong> Universal human behavioral patterns</li>
+                        <li><strong>Anthropological:</strong> Cross-cultural symbolic universals</li>
+                        <li><strong>Transcendental:</strong> Spiritual realities</li>
+                        <li><strong>Psychological:</strong> Therapeutic transformation processes</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>Systematic Deconstruction</h3>
+                    <p>Roesler's investigation revealed these approaches had "collapsed into apparent coherence through decades of uncritical synthesis" despite arising from fundamentally different epistemological foundations.</p>
+                    <div class="highlight warning">
+                        Only the psychological dimension of transformation processes retains scientific viability as a foundation for future reconstruction.
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Paradox Section -->
+        <section class="section" id="paradox">
+            <div class="section-header">
+                <h2 class="section-title">The Unprecedented Paradox</h2>
+                <p class="section-subtitle">A therapy that works without understanding why—a unique situation in modern psychotherapy</p>
+            </div>
+            
+            <div class="diagram">
+                <div class="diagram-title">The Analytical Psychology Paradox</div>
+                <div class="paradox-split">
+                    <div class="paradox-side collapse-side">
+                        <h4>Theoretical Collapse</h4>
+                        <ul style="text-align: left; margin-top: 1rem; line-height: 1.8;">
+                            <li>• No empirical support</li>
+                            <li>• Zero RCTs in 100+ years</li>
+                            <li>• Incompatible truth claims</li>
+                            <li>• Insufficient evidence status</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="paradox-side success-side">
+                        <h4>Clinical Effectiveness</h4>
+                        <ul style="text-align: left; margin-top: 1rem; line-height: 1.8;">
+                            <li>• Measurable outcomes</li>
+                            <li>• Large effect sizes (0.94-1.48)</li>
+                            <li>• Sustained improvement</li>
+                            <li>• High patient satisfaction</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="caption">The field demonstrates therapeutic success while lacking understanding of its own mechanisms—an unprecedented situation requiring empirical reconstruction.</div>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Troubling Implications</h3>
+                    <p>This paradox places analytical psychology in an unprecedented position within the broader psychotherapy community. While systematic critique dismantles theoretical foundations, clinical studies demonstrate consistent therapeutic improvements.</p>
+                </div>
+                
+                <div class="card">
+                    <h3>A Unique Opportunity</h3>
+                    <p>Rather than a dead end, this crisis represents an extraordinary opportunity for empirical reconstruction—a chance to build evidence-based depth psychology from the ground up.</p>
+                    <div class="highlight success">
+                        <strong>Research Opportunity:</strong> We know the therapy works. Now we can discover how and why through systematic investigation.
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Evidence Gap Section -->
+        <section class="section" id="evidence">
+            <div class="section-header">
+                <h2 class="section-title">Contemporary Context</h2>
+                <p class="section-subtitle">Where analytical psychology stands in contemporary psychotherapy research</p>
+            </div>
+            
+            <div class="diagram">
+                <div class="diagram-title">Evidence Hierarchy in Contemporary Psychotherapy</div>
+                <div class="evidence-stack">
+                    <div class="evidence-tier tier-very-strong">
+                        <div class="tier-label">CBT, DBT (Selected)</div>
+                        <div>VERY STRONG: Sustained benefit, minimal risk</div>
+                    </div>
+                    <div class="evidence-tier tier-strong">
+                        <div class="tier-label">Psychodynamic Therapy</div>
+                        <div>STRONG: Meta-analytic support, mechanism research</div>
+                    </div>
+                    <div class="evidence-tier tier-moderate">
+                        <div class="tier-label">Humanistic Approaches</div>
+                        <div>MODERATE: Some controlled evidence</div>
+                    </div>
+                    <div class="evidence-tier tier-weak">
+                        <div class="tier-label">Various Integrative</div>
+                        <div>WEAK: Limited clinical meaningfulness</div>
+                    </div>
+                    <div class="evidence-tier tier-insufficient">
+                        <div class="tier-label">Analytical Psychology</div>
+                        <div>INSUFFICIENT: Zero RCTs, no mechanisms research</div>
+                    </div>
+                </div>
+                <div class="caption">Analytical psychology occupies the lowest tier despite demonstrated clinical effectiveness—a position that can and must be changed.</div>
+            </div>
+            
+            <div class="highlight warning">
+                <h4>The Methodological Wasteland</h4>
+                <p>The sole exception emerges in Roesler's Structural Dream Analysis method, which provides systematic identification of five repetitive dream patterns that correlate with both psychological disturbance and therapeutic improvement. This singular achievement proves that depth psychological processes can be subjected to rigorous empirical investigation.</p>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Research Deficit Reality</h3>
+                    <p>The field's research deficits stem not from inherent incompatibility between depth psychology and empirical methodology, but from systematic neglect of scientific investigation that other therapeutic approaches have pursued successfully.</p>
+                </div>
+                
+                <div class="card">
+                    <h3>The Path Forward</h3>
+                    <p>Roesler's dream analysis work illuminates both the possibility and necessity of empirical reconstruction within analytical psychology, providing a methodological template for future research.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Literature Review Section - FIXED! -->
+        <section class="section" id="methodology">
+            <div class="section-header">
+                <h2 class="section-title">Literature Review</h2>
+                <p class="section-subtitle">Systematic search strategy for psychodynamic transformation research</p>
+            </div>
+            
+            <div class="diagram">
+                <div class="diagram-title">Systematic Search Strategy for Psychodynamic Transformation Research</div>
+                <div class="search-flow">
+                    <!-- Research Question -->
+                    <div class="search-step question-step">
+                        <h4>Primary Research Question</h4>
+                        <div class="highlight" style="background: rgba(255,255,255,0.2); border-left: 4px solid rgba(255,255,255,0.5); color: white;">
+                            <strong>How do different psychodynamic approaches conceptualize and study transformation processes in psychotherapy?</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="search-arrow">↓</div>
+                    
+                    <!-- Databases -->
+                    <div class="search-step databases-step">
+                        <h4>Database Search Strategy</h4>
+                        <div class="databases-grid">
+                            <div class="database-item">
+                                <div class="database-name">PsycINFO</div>
+                                <div class="database-type">(Primary)</div>
+                            </div>
+                            <div class="database-item">
+                                <div class="database-name">PubMed/MEDLINE</div>
+                                <div class="database-type">(Medical)</div>
+                            </div>
+                            <div class="database-item">
+                                <div class="database-name">Web of Science</div>
+                                <div class="database-type">(Multidisciplinary)</div>
+                            </div>
+                            <div class="database-item">
+                                <div class="database-name">Cochrane Library</div>
+                                <div class="database-type">(Reviews/RCTs)</div>
+                            </div>
+                            <div class="database-item">
+                                <div class="database-name">Google Scholar</div>
+                                <div class="database-type">(Supplementary)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="search-arrow">↓</div>
+                    
+                    <!-- Search Terms -->
+                    <div class="search-step terms-step">
+                        <h4>Core Search Terms & Domains</h4>
+                        <div class="search-categories">
+                            <div class="search-category">
+                                <h5>Transformation/Change Processes</h5>
+                                <ul>
+                                    <li>"transformation process*" AND psychotherapy</li>
+                                    <li>"individuation process*" AND psychoanalys*</li>
+                                    <li>"psychological transformation" AND "mechanisms of change"</li>
+                                    <li>"therapeutic transformation" AND psychodynamic</li>
+                                </ul>
+                            </div>
+                            <div class="search-category">
+                                <h5>Psychodynamic Mechanisms</h5>
+                                <ul>
+                                    <li>"mentalization" AND "therapeutic change"</li>
+                                    <li>"corrective emotional experience*"</li>
+                                    <li>"therapeutic alliance" AND "transformation"</li>
+                                    <li>"insight" AND "psychological change"</li>
+                                </ul>
+                            </div>
+                            <div class="search-category">
+                                <h5>Integration/Fragmentation</h5>
+                                <ul>
+                                    <li>"psychological integration" AND psychotherapy</li>
+                                    <li>"fragmentation" AND "therapeutic process"</li>
+                                    <li>"wholeness" AND psychodynamic therapy</li>
+                                    <li>"self cohesion" AND transformation</li>
+                                </ul>
+                            </div>
+                            <div class="search-category">
+                                <h5>Process-Outcome Studies</h5>
+                                <ul>
+                                    <li>"mechanisms of change" AND psychodynamic</li>
+                                    <li>"process-outcome" AND psychoanalysis</li>
+                                    <li>"mediators" AND psychotherapy</li>
+                                    <li>"therapeutic change" AND "empirical"</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <h5 style="margin-top: 20px; margin-bottom: 10px; color: white;">Roesler's Four Transformation Models</h5>
+                        <div class="roesler-models-grid">
+                            <div class="roesler-model">
+                                <h6>1. Centering/Self-Organization</h6>
+                                <p>"self-organizing" + psychotherapy<br>"self-regulation" + therapeutic change</p>
+                            </div>
+                            <div class="roesler-model">
+                                <h6>2. Sequential Stage Models</h6>
+                                <p>"developmental stages" + psychotherapy<br>"phase-oriented treatment"</p>
+                            </div>
+                            <div class="roesler-model">
+                                <h6>3. Hero's Journey/Consciousness</h6>
+                                <p>"consciousness development" + therapy<br>"ego development" + psychoanalysis</p>
+                            </div>
+                            <div class="roesler-model">
+                                <h6>4. Alchemical/Symbolic</h6>
+                                <p>"symbolic process*" + psychotherapy<br>"metaphorical transformation"</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="search-arrow">↓</div>
+                    
+                    <!-- Analysis Framework -->
+                    <div class="search-step analysis-step">
+                        <h4>Critical Analysis Framework</h4>
+                        <div class="analysis-categories">
+                            <div class="analysis-category">
+                                <h5>Theoretical Perspective</h5>
+                                <ul>
+                                    <li>How do they conceptualize transformation?</li>
+                                    <li>Inner vs. relational change?</li>
+                                    <li>What mechanisms proposed?</li>
+                                </ul>
+                            </div>
+                            <div class="analysis-category">
+                                <h5>Empirical Evidence</h5>
+                                <ul>
+                                    <li>What methodology used?</li>
+                                    <li>How was "transformation" operationalized?</li>
+                                    <li>What were key findings?</li>
+                                </ul>
+                            </div>
+                            <div class="analysis-category">
+                                <h5>Relevance to AP</h5>
+                                <ul>
+                                    <li>Support/challenge Jung's models?</li>
+                                    <li>Methods adaptable for AP research?</li>
+                                    <li>What gaps remain?</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Key Findings -->
+                    <div class="findings-section">
+                        <h4>Key Research Findings</h4>
+                        <div class="findings-grid">
+                            <div class="finding-card">
+                                <h5>Mentalization Research</h5>
+                                <p>Lüdemann et al. (2021): Systematic review of 10 studies showing mentalization as key transformation mechanism, with baseline levels predicting outcomes.</p>
+                            </div>
+                            <div class="finding-card">
+                                <h5>Insight & Self-Understanding</h5>
+                                <p>Jennissen et al. (2021): Early insight gains predicted symptom reduction in dynamic therapy, validating "making unconscious conscious."</p>
+                            </div>
+                            <div class="finding-card">
+                                <h5>Corrective Emotional Experiences</h5>
+                                <p>EAET research demonstrates transformative emotional experiences modify longstanding patterns through new relational encounters.</p>
+                            </div>
+                            <div class="finding-card">
+                                <h5>Integration/Fragmentation</h5>
+                                <p>Spermon et al. (2010): Complex trauma creates dissociation; therapy integrates fragmented states through symbolic processing.</p>
+                            </div>
+                            <div class="finding-card">
+                                <h5>Therapeutic Alliance</h5>
+                                <p>Meta-analytic evidence confirms alliance quality predicts transformation outcomes across modalities (~7% variance).</p>
+                            </div>
+                            <div class="finding-card">
+                                <h5>Process-Outcome Methods</h5>
+                                <p>Cornell-Penn study provides model for tracking transformation mechanisms over time and linking early changes to later outcomes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="caption">Comprehensive search strategy designed to identify empirical approaches to studying transformation processes across psychodynamic modalities, providing methodological foundation for analytical psychology research.</div>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Methodological Foundation</h3>
+                    <p>This systematic search strategy provides the empirical foundation for understanding how transformation processes have been studied across psychodynamic approaches, identifying both methodological innovations and research gaps that analytical psychology must address.</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Bridging Research Traditions</h3>
+                    <p>By examining established psychodynamic research methodologies, we can adapt proven approaches for investigating Jungian constructs while maintaining scientific rigor and contributing to the broader depth psychology evidence base.</p>
+                    <div class="highlight success">
+                        <strong>Integration Goal:</strong> Leverage established psychodynamic research methods to validate distinctive Jungian transformation processes.
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Mechanisms Section -->
+        <section class="section" id="mechanisms">
+            <div class="section-header">
+                <h2 class="section-title">Mechanisms Analysis</h2>
+                <p class="section-subtitle">Comparing established psychodynamic mechanisms with Jung's proposed transformation processes</p>
+            </div>
+            
+            <div class="diagram">
+                <div class="diagram-title">Transformation Mechanisms Comparison</div>
+                <div class="mechanisms-compare">
+                    <div class="mechanism-column established">
+                        <h4>Psychodynamic Therapy</h4>
+                        <p><strong>Established Mechanisms:</strong></p>
+                        <ul class="mechanism-list">
+                            <li>Mentalization</li>
+                            <li>Therapeutic Alliance</li>
+                            <li>Corrective Emotional Experience</li>
+                            <li>Insight Development</li>
+                            <li>Affect Processing</li>
+                            <li>Adaptive Defenses</li>
+                            <li>Interpersonal Patterns</li>
+                        </ul>
+                        <div style="margin-top: 1rem; font-weight: 600; color: var(--success);">STATUS: Meta-analytic support</div>
+                    </div>
+                    
+                    <div class="mechanism-column proposed">
+                        <h4>Analytical Psychology</h4>
+                        <p><strong>Proposed Mechanisms:</strong></p>
+                        <ul class="mechanism-list">
+                            <li>Archetypal Transformation</li>
+                            <li>Individuation Process</li>
+                            <li>Transcendent Function</li>
+                            <li>Active Imagination</li>
+                            <li>Symbolic Integration</li>
+                            <li>Compensatory Dynamics</li>
+                            <li>Mandala Formation</li>
+                        </ul>
+                        <div style="margin-top: 1rem; font-weight: 600; color: var(--warning);">STATUS: Requires investigation</div>
+                    </div>
+                </div>
+                <div class="caption">Comparative analysis reveals shared transformation factors while highlighting analytical psychology's unique contributions requiring empirical validation.</div>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Integration Research Connection</h3>
+                    <p>Complex trauma and dissociation research provides sophisticated frameworks for studying psychological integration processes that validate Jung's understanding of complexes as split-off fragments requiring integration through symbolic engagement.</p>
+                    <div class="highlight success">
+                        <strong>Research Bridge:</strong> Contemporary trauma research supports Jung's core premise about psychological transformation involving integration of dissociated aspects toward wholeness.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>Methodological Innovation</h3>
+                    <p>Mixed-methods approaches that combine quantitative validation with qualitative depth preservation, honoring both symbolic complexity and empirical rigor without sacrificing either theoretical depth or scientific credibility.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Reconstruction Section -->
+        <section class="section" id="reconstruction">
+            <div class="section-header">
+                <h2 class="section-title">Empirical Investigation</h2>
+                <p class="section-subtitle">Following Lakatos's philosophy of science toward a generative research paradigm</p>
+            </div>
+            
+            <div class="diagram">
+                <div class="diagram-title">Proposed Reconstruction Pathway</div>
+                <div class="pathway">
+                    <div class="pathway-step">
+                        <div class="step-number">1</div>
+                        <h4>Crisis Recognition</h4>
+                        <p>Theoretical Collapse Acknowledged</p>
+                    </div>
+                    <div class="pathway-step">
+                        <div class="step-number">2</div>
+                        <h4>Empirical Investigation</h4>
+                        <p>Mechanism Research Initiated</p>
+                    </div>
+                    <div class="pathway-step">
+                        <div class="step-number">3</div>
+                        <h4>Theoretical Reconstruction</h4>
+                        <p>Evidence-Based Framework</p>
+                    </div>
+                    <div class="pathway-step">
+                        <div class="step-number">4</div>
+                        <h4>Clinical Integration</h4>
+                        <p>Validated Practice Implementation</p>
+                    </div>
+                </div>
+                <div class="caption">Moving from crisis through systematic investigation toward a generative research paradigm that advances both theory and practice.</div>
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <h3>Methodological Framework</h3>
+                    <p>Imre Lakatos's philosophy of science provides guidance through his distinction between research program "hard cores" and "protective belts" of testable hypotheses that can be modified without abandoning essential insights.</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Core Preservation Strategy</h3>
+                    <p>Mixed-methods approaches that combine quantitative validation with qualitative depth preservation, honoring both symbolic complexity and empirical rigor without sacrificing either theoretical depth or scientific credibility.</p>
+                </div>
+            </div>
+            
+            <div class="highlight">
+                <h4>Research Program Vision</h4>
+                <p>A comprehensive program designed to establish analytical psychology as an evidence-based approach while investigating its distinctive depth psychological insights, moving beyond the false choice between scientific reductionism and anti-empirical defensive isolation.</p>
+            </div>
+        </section>
+        
+        <!-- Future Vision Section -->
+        <section class="section" id="future">
+            <div class="section-header">
+                <h2 class="section-title">Call to Action</h2>
+                <p class="section-subtitle">A call to action for evidence-based analytical psychology</p>
+            </div>
+            
+            <div class="action-section">
+                <h3>The Fundamental Choice</h3>
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">The analytical psychology community confronts a choice that will determine the field's trajectory: embrace empirical investigation while preserving depth insights, or persist in isolation that risks continued marginalization.</p>
+                
+                <div class="priority-grid">
+                    <div class="priority-card">
+                        <div class="priority-icon">🎓</div>
+                        <h4>Training Reform</h4>
+                        <p>Integration of research methodology within curricula while maintaining depth psychological training</p>
+                    </div>
+                    <div class="priority-card">
+                        <div class="priority-icon">🔬</div>
+                        <h4>Research Infrastructure</h4>
+                        <p>Collaborative partnerships supporting sustained investigation across multiple decades</p>
+                    </div>
+                    <div class="priority-card">
+                        <div class="priority-icon">📊</div>
+                        <h4>Methodological Innovation</h4>
+                        <p>Mixed-methods approaches preserving symbolic richness while meeting scientific standards</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quote">
+                Just as Jung's individuation process involves psychological death and rebirth through symbolic transformation, analytical psychology itself must undergo fundamental transformation to achieve scientific maturity while preserving essential clinical insights.
+            </div>
+            
+            <div class="content-grid">
+                <div class="card">
+                    <h3>The Alchemical Metaphor</h3>
+                    <p>Using Jung's own framework to understand this transformation:</p>
+                    <ul style="line-height: 1.8; margin-top: 1rem;">
+                        <li><strong>Nigredo (Blackening):</strong> Roesler's deconstruction—necessary dissolution of untenable claims</li>
+                        <li><strong>Albedo (Whitening):</strong> Empirical illumination through systematic investigation</li>
+                        <li><strong>Rubedo (Reddening):</strong> Integration of depth wisdom with scientific rigor</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>Next Steps</h3>
+                    <p>This research program represents an early attempt at reconstruction through systematic exploration of transformation mechanisms that could establish scientific credibility while preserving the depth psychological insights that distinguish analytical psychology.</p>
+                    <div class="highlight">
+                        <strong>The Vision:</strong> Evidence-based depth psychology that advances both theoretical understanding and therapeutic effectiveness through methodological sophistication.
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <script>
+        // Navigation and scroll progress
+        const navItems = document.querySelectorAll('.nav-item');
+        const sections = document.querySelectorAll('.section');
+        const progressBar = document.querySelector('.progress-bar');
+        
+        // Navigation functionality
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const targetId = item.dataset.section;
+                
+                // Update navigation
+                navItems.forEach(nav => nav.classList.remove('active'));
+                item.classList.add('active');
+                
+                // Update sections
+                sections.forEach(section => section.classList.remove('active'));
+                document.getElementById(targetId).classList.add('active');
+                
+                // Smooth scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+        
+        // Progress bar
+        function updateProgress() {
+            const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollTop = window.pageYOffset;
+            const progress = (scrollTop / scrollHeight) * 100;
+            progressBar.style.width = progress + '%';
+        }
+        
+        window.addEventListener('scroll', updateProgress);
+        
+        // Interactive fragment tooltips
+        const fragments = document.querySelectorAll('.fragment');
+        fragments.forEach(fragment => {
+            fragment.addEventListener('click', () => {
+                const info = fragment.dataset.info;
+                if (info) {
+                    // Create and show tooltip
+                    const existingTooltip = fragment.querySelector('.tooltip-content');
+                    if (!existingTooltip) {
+                        const tooltip = document.createElement('div');
+                        tooltip.className = 'tooltip-content';
+                        tooltip.textContent = info;
+                        fragment.appendChild(tooltip);
+                        fragment.classList.add('interactive-tooltip');
+                    }
+                }
+            });
+        });
+        
+        // Smooth reveal animations for cards
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+        
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
